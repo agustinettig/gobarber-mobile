@@ -4,7 +4,9 @@ import React, {
 import { TextInputProps } from 'react-native';
 import { useField } from '@unform/core';
 
-import { Container, TextInput, Icon } from './styles';
+import {
+  Container, TextInput, Icon, ErrorContainer, ErrorText,
+} from './styles';
 
 interface InputProps extends TextInputProps {
   name: string;
@@ -62,21 +64,29 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = ({ name, ico
   }, []);
 
   return (
-    <Container isFocused={isFocused} hasError={!!error}>
-      <Icon name={icon} size={20} color={isFocused || hasContent ? '#ff9000' : '#666360'} />
-      <TextInput
-        ref={inputElementRef}
-        keyboardAppearance="dark"
-        placeholderTextColor="#666360"
-        defaultValue={defaultValue}
-        onChangeText={(value) => {
-          inputValueRef.current.value = value;
-        }}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        {...rest}
-      />
-    </Container>
+    <>
+      <Container isFocused={isFocused} hasError={!!error}>
+        <Icon name={icon} size={20} color={isFocused || hasContent ? '#ff9000' : '#666360'} />
+        <TextInput
+          ref={inputElementRef}
+          keyboardAppearance="dark"
+          placeholderTextColor="#666360"
+          defaultValue={defaultValue}
+          onChangeText={(value) => {
+            inputValueRef.current.value = value;
+          }}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          {...rest}
+        />
+      </Container>
+      {error && (
+        <ErrorContainer>
+          <Icon name="alert-circle" size={16} color="#c53030" style={{ marginRight: 0 }} />
+          <ErrorText>{error}</ErrorText>
+        </ErrorContainer>
+      )}
+    </>
   );
 };
 

@@ -16,6 +16,7 @@ import {
   Container, Title, ForgotPassword, ForgotPasswordText, CreateAccountButton, CreateAccountButtonText,
 } from './styles';
 import getValidationErrors from '../../utils/getValidationErrors';
+import { useAuth } from '../../hooks/auth';
 
 interface LoginFormData {
   email: string;
@@ -26,6 +27,7 @@ const Login: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
+  const { login } = useAuth();
 
   const handleLogin = useCallback(async (data: LoginFormData) => {
     try {
@@ -38,6 +40,11 @@ const Login: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      await login({
+        email: data.email,
+        password: data.password,
+      });
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
@@ -46,7 +53,7 @@ const Login: React.FC = () => {
       }
       Alert.alert('Login failed', 'Please check your credentials');
     }
-  }, []);
+  }, [login]);
 
   return (
     <>

@@ -16,6 +16,7 @@ import {
   Container, Title, BackToLogin, BackToLoginText,
 } from './styles';
 import getValidationErrors from '../../utils/getValidationErrors';
+import api from '../../services/api';
 
 interface SignUpFormData {
   name: string;
@@ -41,14 +42,21 @@ const Login: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      await api.post('/users', data);
+
+      navigation.goBack();
+
+      Alert.alert('Sign up success!', 'You can log in now!');
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
         formRef.current?.setErrors(errors);
+        return;
       }
       Alert.alert('Error on sign up!', 'There was an error trying to sign up.');
     }
-  }, []);
+  }, [navigation]);
 
   return (
     <>

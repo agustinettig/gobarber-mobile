@@ -42,7 +42,8 @@
       "react/prop-types": "off",
       "react/jsx-props-no-spreading": "off",
       "no-use-before-define": "off",
-      "max-len": ["error", 120]
+      "max-len": ["error", 120],
+      "@typescript-eslint/ban-types": "off"
     },
     "settings": {
       "import/resolver": {

@@ -33,3 +33,18 @@ export const TextInput = styled.TextInput`
 export const Icon = styled(FeatherIcon)`
   margin-right: 8px;
 `;
+
+export const ErrorContainer = styled.View`
+  width: 100%;
+  padding: 0 16px;
+  margin-top: -16px;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const ErrorText = styled.TextInput`
+  flex: 1;
+  color: #c53030;
+  font-size: 14px;
+  font-family: 'RobotoSlab-Regular';
+`;
